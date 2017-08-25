@@ -36,7 +36,7 @@ LiquidCrystal lcd(PIN_RS, PIN_EN, PIN_D4, PIN_D5, PIN_D6, PIN_D7);
 
 void readCAN() {
   tCAN message;
-  while (mcp2515_check_message()) { //read until buffer empty
+  while (mcp2515_check_message()) { 
     if (mcp2515_get_message(&message)) {
       if (canNotReady) {
         lcd.clear();
@@ -142,8 +142,8 @@ void wrapPage() {
   } else if (pageNo > NUM_PAGES - 1) {
     pageNo = 0;
   }
-  Serial.print("Page ");
-  Serial.println(pageNo);
+  //Serial.print("Page ");
+  //Serial.println(pageNo);
 }
 
 void incrementPage() {
@@ -191,16 +191,16 @@ void setup() {
   lcd.setCursor(0, 0);
   lcd.print("Digital Cluster");
   lcd.setCursor(0, 1);
-  lcd.print("    v0.1.2     ");
+  lcd.print("    v0.1.3     ");
 
   delay(2000);    //Wait 2000ms
   
   //Enable Serial
-  Serial.begin(9600);
-  Serial.println("Serial output for debugging");
+  //Serial.begin(9600);
+  //Serial.println("Serial output for debugging");
 
   if (Canbus.init(CANSPEED_500)) {
-    Serial.println("CAN init OK");
+    //Serial.println("CAN init OK");
   }
   else {
     lcd.clear();
@@ -209,7 +209,7 @@ void setup() {
     lcd.setCursor(0,1);
     lcd.println("Reset to restart");
     
-    Serial.println("CAN init failed");
+    //Serial.println("CAN init failed");
     delay(100000);
   }
 
@@ -244,8 +244,6 @@ void loop() {
         displayRPM(1);
         break;
       default:
-        lcd.setCursor(0, 1);
-        lcd.print(millis() / 1000);
         break;
     }
   }
@@ -254,5 +252,4 @@ void loop() {
     lcd.print("Waiting for CAN");
   }
 
-  delay(5); // [TODO] Verify if msg buffering is still causing issue
 }
