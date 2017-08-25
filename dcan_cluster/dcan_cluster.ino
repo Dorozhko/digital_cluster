@@ -36,8 +36,8 @@ LiquidCrystal lcd(PIN_RS, PIN_EN, PIN_D4, PIN_D5, PIN_D6, PIN_D7);
 
 void readCAN() {
   tCAN message;
-  while (mcp2515_check_message()) { 
-    if (mcp2515_get_message(&message)) {
+  if (mcp2515_check_message()) { 
+    while (mcp2515_get_message(&message)) {
       if (canNotReady) {
         lcd.clear();
       }
